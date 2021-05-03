@@ -7,6 +7,7 @@ colorama==0.4.4
 configobj==5.0.6
 delegator.py==0.1.1
 Flask==1.1.2
+Flask-API==2.0
 frida==14.2.14
 frida-tools==9.2.2
 gunicorn==20.1.0
