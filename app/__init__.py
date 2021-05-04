@@ -8,7 +8,7 @@ from flask import request, jsonify
 from instance.config import app_config
 
 # initialize sql-alchemy
-
+db = SQLAlchemy()
 
 
 def create_app(config_name):
@@ -16,12 +16,10 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db = SQLAlchemy(app)
-    # db.init_app(app)
-    with app.app_context():
-        db.create_all()
+    db.init_app(app)
 
     from app.models import Portfolio, Trades
+    db.create_all()
 
     @app.route('/test')
     def main():
