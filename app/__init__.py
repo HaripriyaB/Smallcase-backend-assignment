@@ -24,7 +24,7 @@ def create_app(config_name):
 
     @app.route('/')
     def main():
-        return "Hello World\n Following are the list of routes for this API:\n1. '/trade'\n2. '/trade/<int:id>/delete'\n3. '/portfolio'\n4. '/returns'"
+        return "Hello World\n Following are the list of routes for this API:\n1. '/trade'\n2. '/trade/[id]/delete'\n3. '/portfolio'\n4. '/returns'"
 
     @app.route('/trade', methods=['GET', 'PUT', 'POST'])
     def trading():
