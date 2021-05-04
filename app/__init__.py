@@ -73,6 +73,14 @@ def create_app(config_name):
             if not tradelist:
                 flag=1
 
+            if request.data.get('price') <= 0: 
+                response = jsonify({'ERROR': 'Zero or Negative price not valid'})
+                response.status_code = 400
+                return response
+            if request.data.get('shares') <=0:
+                response = jsonify({'ERROR': 'Zero or Negative shares not valid'})
+                response.status_code = 400
+                return response
             if request.data.get('type') == 'SELL':
                 check_portfolio = Portfolio.query.filter_by(
                     ticker_symbol=request.data.get('ticker_symbol')).first()
@@ -138,6 +146,14 @@ def create_app(config_name):
                     response = jsonify({'ERROR': 'Record already exists'})
                     response.status_code = 200
                     return response
+            if request.data.get('price') <= 0: 
+                response = jsonify({'ERROR': 'Zero or Negative price not valid'})
+                response.status_code = 400
+                return response
+            if request.data.get('shares') <=0:
+                response = jsonify({'ERROR': 'Zero or Negative shares not valid'})
+                response.status_code = 400
+                return response
             if request.data.get('type') == 'SELL':
                 check_portfolio = Portfolio.query.filter_by(
                     ticker_symbol=request.data.get('ticker_symbol')).first()
