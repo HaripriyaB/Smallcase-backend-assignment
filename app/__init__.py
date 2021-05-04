@@ -22,9 +22,9 @@ def create_app(config_name):
     with app.app_context():
         db.create_all()
 
-    @app.route('/test')
+    @app.route('/')
     def main():
-        return "Hello World"
+        return "Hello World\n Following are the list of routes for this API:\n1. '/trade'\n2. '/portfolio'\n3. '/returns'"
 
     @app.route('/trade', methods=['GET', 'PUT', 'POST'])
     def trading():
