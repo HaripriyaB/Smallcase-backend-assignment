@@ -19,7 +19,8 @@ def create_app(config_name):
     db.init_app(app)
 
     from app.models import Portfolio, Trades
-    db.create_all()
+    with app.app_context():
+        db.create_all()
 
     @app.route('/test')
     def main():
