@@ -89,6 +89,7 @@ def create_app(config_name):
                         {'ERROR': 'Cannot sell when low/no shares available'})
                     response.status_code = 400
                     return response
+            prev_shares = tradelist.shares
             if flag==1:
                 tradelist=Trades(id,str(request.data.get('ticker_symbol')),request.data.get('price'), request.data.get('shares')
                 ,str(request.data.get('type')))
@@ -108,11 +109,12 @@ def create_app(config_name):
                     total = total / (tradelist.shares +
                                      current_portfolio.shares)
                     current_portfolio.avg_buy_price = total
-                    current_portfolio.shares = tradelist.shares + current_portfolio.shares
+                    current_portfolio.shares = tradelist.shares-prev_shares + current_portfolio.shares
+                    
                 else:
                     current_portfolio = Portfolio.query.filter_by(
                         ticker_symbol=request.data.get('ticker_symbol', '')).first()
-                    current_portfolio.shares = tradelist.shares + current_portfolio.shares
+                    current_portfolio.shares = current_portfolio.shares - tradelist.shares + prev_shares
 
                 current_portfolio.add_trade()
             else:
@@ -182,7 +184,7 @@ def create_app(config_name):
                 else:
                     current_portfolio = Portfolio.query.filter_by(
                         ticker_symbol=request.data.get('ticker_symbol', '')).first()
-                    current_portfolio.shares = tradelist.shares + current_portfolio.shares
+                    current_portfolio.shares = current_portfolio.shares - tradelist.shares
                 current_portfolio.add_trade()
             else:
                 portfolio = Portfolio(
